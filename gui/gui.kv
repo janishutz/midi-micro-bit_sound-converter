@@ -1,0 +1,20 @@
+HomeScreen:
+    name: "Home"
+    md_bg_color: app.theme_cls.accent_color
+    GridLayout:
+        cols:1
+        Label:
+            text: "MIDI to Micro:bit Sound converter"
+            font_size: 30
+            bold: True
+            italic: True
+            color: (50, 50, 255, 1)
+        Label:
+            id: infobox
+            text: "Output will be automatically added to your clipboard once you have selected a file"
+        Button:
+            text: "choose file to start"
+            background_color: app.theme_cls.primary_color
+            on_release:
+                app.root.current = "ChooseFile"
+                root.manager.transition.direction = "left"

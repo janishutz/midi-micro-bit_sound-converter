@@ -1,0 +1,22 @@
+FileChooserScreen:
+    name: "ChooseFile"
+    md_bg_color: (0, 0, 0, 1)
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release:
+                    app.root.current = "Home"
+                    root.manager.transition.direction = "right"
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
