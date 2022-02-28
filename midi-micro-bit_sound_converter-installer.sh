@@ -2,7 +2,7 @@
 
 sudo apt-get install git
 
-mkdir test_clone && cd ./midi-micro_bit-converter
+mkdir ./midi-micro_bit-converter && cd ./midi-micro_bit-converter
 
 git clone https://github.com/simplePCBuilding/midi-micro-bit_sound-converter
 
