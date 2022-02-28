@@ -65,6 +65,7 @@ class MidiManagement:
 
                 self.timing_exp = self.ext_shortened[self.pos:]
                 self.__output = self.note_ext
+                self.__output += self.note_decod_oct
                 self.__output += f":{self.timing_exp}"
                 self.__output_list.append(str(self.__output))
 
