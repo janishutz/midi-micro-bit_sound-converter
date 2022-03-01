@@ -12,8 +12,7 @@ pip install kivymd
 pip install pyperclip
 pip install mido
 
-You can run the app by heading into the folder you downloaded the zip file into, unzipping it and then by running the midi-converter.py file in the terminal 
-/ command prompt. 
+You can run the app by heading into the folder you downloaded the zip file into, unzipping it and then by running the midi-converter.py file in the terminal / command prompt. (python3 midi-converter.py)
 You may do this as follows:
 ### Linux and MacOS:
 Use cd./Path/To/File
@@ -23,8 +22,10 @@ Click on the navigation bar (the one where the path is displayed) and type: cmd
 
 
 ### SPECIAL notes for Linux users:
-You'll need to install some other dependencies first. Use your distro's package manager (apt-get for Debian based distros, dnf for Fedora based and pacman for
-arch-based distros). I'll show an example with debian based distros here:
+You'll need to install some other dependencies first. Use your distro's package manager (apt-get for Debian based distros, dnf for Fedora based and pacman for arch-based distros). I'll show an example with debian based distros here: (you may also run the script under releases if you run a debian based distro.
 sudo apt-get install xclip
 sudo apt-get install xsel
 sudo apt-get install wl-clipboard
+
+### OTHER OPTION:
+You may also run it in a venv (Virtual Environment), e.g. in Thonny. You still must install kivy[base], kivymd, pyperclip and mido in that venv (by using the manager of the IDE you are running)
