@@ -17,6 +17,9 @@ You may do this as follows:
 ### Linux and MacOS:
 Use cd./Path/To/File
 
+### Linux
+You may download the bash script that is located under releases. Give it execute permissions (e.g run chmod +x ./Path/To/File) and then run the file with ./Path/To/File
+
 ### Windows:
 Click on the navigation bar (the one where the path is displayed) and type: cmd
 
