@@ -57,7 +57,6 @@ class TrackChooseScreen(MDScreen):
             self.path = backend.csv_parsers.CsvRead().importing("./backend/temp.csv").pop(0)
             self.path_transmit = self.path.pop(0)
             backend.midi_management.MidiManagement().analyse_track(str(self.path_transmit), self.chosen_track)
-            print("go")
             screen_manager.get_screen("Home").ids.infobox.text = "The command has been copied to the clipboard"
             screen_manager.current = "Home"
             screen_manager.transition.direction = "right"
