@@ -14,7 +14,10 @@ class MidiManagement:
         self.tracks = []
         for self.track in self.midi_imp.tracks:
             self.tracks.append(str(self.track))
-        self.tracks.pop(0)
+        if len(self.tracks) > 1:
+            self.tracks.pop(0)
+        else:
+            pass
         self.track_ext = self.tracks.pop(0)
         self.trackn = 0
         while self.track_ext != trackname:

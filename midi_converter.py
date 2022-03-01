@@ -27,12 +27,14 @@ class FileChooserScreen(MDScreen):
                 self.tracks = []
                 for self.track in self.mid.tracks:
                     self.tracks.append(str(self.track))
-                self.tracks.pop(0)
                 if len(self.tracks) > 1:
+                    self.tracks.pop(0)
                     screen_manager.get_screen("Track").ids.track_spinner.values = self.tracks
                     screen_manager.current = "Track"
                     screen_manager.transition.direction = "up"
                 else:
+                    backend.midi_management.MidiManagement().analyse_track(str(self.path), self.tracks.pop(0))
+                    screen_manager.get_screen("Home").ids.infobox.text = "The command has been copied to the clipboard"
                     screen_manager.current = "Home"
                     screen_manager.transition.direction = "right"
             except:
