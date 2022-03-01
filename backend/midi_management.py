@@ -72,7 +72,6 @@ class MidiManagement:
             except:
                 pass
 
-        print(self.__output_list)
         self.addToClipboard(str(self.__output_list))
 
 
