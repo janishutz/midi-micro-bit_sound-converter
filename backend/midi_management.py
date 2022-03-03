@@ -28,35 +28,56 @@ class MidiManagement:
         for self.msg in self.midi_imp.tracks[self.trackn]:
             self.ext = str(self.msg)
             self.note = self.ext[23:25]
-            try:
-                self.note_height = int(self.note)
-                self.note_decod_oct = self.note_height // 12
-                self.note_decode_tone = self.note_height % 12
-                if self.note_decode_tone == 1:
-                    self.note_ext = "C"
-                elif self.note_decode_tone == 2:
-                    self.note_ext = "C#"
-                elif self.note_decode_tone == 3:
-                    self.note_ext = "D"
-                elif self.note_decode_tone == 4:
-                    self.note_ext = "D#"
-                elif self.note_decode_tone == 5:
-                    self.note_ext = "E"
-                elif self.note_decode_tone == 6:
-                    self.note_ext = "F"
-                elif self.note_decode_tone == 7:
-                    self.note_ext = "F#"
-                elif self.note_decode_tone == 8:
-                    self.note_ext = "G"
-                elif self.note_decode_tone == 9:
-                    self.note_ext = "G#"
-                elif self.note_decode_tone == 10:
-                    self.note_ext = "A"
-                elif self.note_decode_tone == 11:
-                    self.note_ext = "A#"
-                elif self.note_decode_tone == 12:
-                    self.note_ext = "H"
+            print(self.ext[0:8])
+            if self.ext[0:8] == "note_on ":
+                try:
+                    self.note_height = int(self.note)
+                    self.note_decod_oct = self.note_height // 12
+                    self.note_decode_tone = self.note_height % 12
+                    if self.note_decode_tone == 1:
+                        self.note_ext = "C"
+                    elif self.note_decode_tone == 2:
+                        self.note_ext = "C#"
+                    elif self.note_decode_tone == 3:
+                        self.note_ext = "D"
+                    elif self.note_decode_tone == 4:
+                        self.note_ext = "D#"
+                    elif self.note_decode_tone == 5:
+                        self.note_ext = "E"
+                    elif self.note_decode_tone == 6:
+                        self.note_ext = "F"
+                    elif self.note_decode_tone == 7:
+                        self.note_ext = "F#"
+                    elif self.note_decode_tone == 8:
+                        self.note_ext = "G"
+                    elif self.note_decode_tone == 9:
+                        self.note_ext = "G#"
+                    elif self.note_decode_tone == 10:
+                        self.note_ext = "A"
+                    elif self.note_decode_tone == 11:
+                        self.note_ext = "A#"
+                    elif self.note_decode_tone == 12:
+                        self.note_ext = "H"
 
+                    self.ext_shortened = self.ext[40:]
+                    self.pos = 0
+                    for buchstabe in self.ext_shortened:
+                        if buchstabe == "=":
+                            self.pos += 1
+                            break
+                        else:
+                            self.pos += 1
+
+                    self.timing_exp = self.ext_shortened[self.pos:]
+                    self.__output = self.note_ext
+                    self.__output += str(self.note_decod_oct)
+                    self.__output += f":{self.timing_exp}"
+                    self.__output_list.append(str(self.__output))
+
+                except:
+                    pass
+            elif self.ext[0:8] == "note_off":
+                print("ok")
                 self.ext_shortened = self.ext[40:]
                 self.pos = 0
                 for buchstabe in self.ext_shortened:
@@ -65,17 +86,13 @@ class MidiManagement:
                         break
                     else:
                         self.pos += 1
+                self.__output = "R"
+                self.__output += f":{self.pos}"
 
                 self.timing_exp = self.ext_shortened[self.pos:]
-                self.__output = self.note_ext
-                self.__output += str(self.note_decod_oct)
-                self.__output += f":{self.timing_exp}"
-                self.__output_list.append(str(self.__output))
-
-            except:
-                pass
+                self.__output_list.append(self.__output)
+            else:
+                print("error \n")
 
         self.addToClipboard(str(self.__output_list))
-
-
 
