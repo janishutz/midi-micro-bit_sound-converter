@@ -28,7 +28,6 @@ class MidiManagement:
         for self.msg in self.midi_imp.tracks[self.trackn]:
             self.ext = str(self.msg)
             self.note = self.ext[23:25]
-            print(self.ext[0:8])
             if self.ext[0:8] == "note_on ":
                 try:
                     self.note_height = int(self.note)
@@ -77,7 +76,6 @@ class MidiManagement:
                 except:
                     pass
             elif self.ext[0:8] == "note_off":
-                print("ok")
                 self.ext_shortened = self.ext[40:]
                 self.pos = 0
                 for buchstabe in self.ext_shortened:
@@ -92,7 +90,7 @@ class MidiManagement:
                 self.timing_exp = self.ext_shortened[self.pos:]
                 self.__output_list.append(self.__output)
             else:
-                print("error \n")
+                pass
 
         self.addToClipboard(str(self.__output_list))
 
