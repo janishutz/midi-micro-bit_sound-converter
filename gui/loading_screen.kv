@@ -10,13 +10,13 @@ TrackChooseScreen:
             italic: True
             color: (50, 50, 255, 1)
         FloatLayout:
-            Spinner:
-                id: track_spinner
+            MDRaisedButton:
+                size: "200dp", "50dp"
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_release: root.show_dropdown(self)
                 size_hint: 0.7, 0.2
                 pos_hint: {"x": 0.15, "y":0.5}
-                background_color: (0, 0, 0, 1)
                 text: "Select a track"
-                values: ["Test"]
         Button:
             text: "confirm"
             background_color: app.theme_cls.primary_color

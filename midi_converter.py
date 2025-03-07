@@ -1,4 +1,7 @@
+from typing import Optional
 from kivy.uix.screenmanager import ScreenManager
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.screen import MDScreen
 from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
@@ -7,10 +10,13 @@ from kivy.uix.label import Label
 from kivymd.app import MDApp
 from mido import MidiFile
 import os
-import backend.midi_management
-import backend.csv_parsers
-import time
+import lib.midi_management
 
+global tracks
+tracks = []
+
+global filepath
+filepath = ''
 
 class HomeScreen(MDScreen):
     pass
@@ -19,25 +25,27 @@ class HomeScreen(MDScreen):
 class FileChooserScreen(MDScreen):
     loadfile = ObjectProperty(None)
     def load(self, path, filename):
+        global filepath
         try:
             self.path = os.path.join(path, filename[0])
             try:
-                self.mid = MidiFile(self.path, clip=True)
-                backend.csv_parsers.CsvWrite().write_str("./backend/temp.csv", [self.path])
-                self.tracks = []
-                for self.track in self.mid.tracks:
-                    self.tracks.append(str(self.track))
-                if len(self.tracks) > 1:
-                    self.tracks.pop(0)
-                    screen_manager.get_screen("Track").ids.track_spinner.values = self.tracks
+                mid = MidiFile(self.path, clip=True)
+                filepath = self.path
+                global tracks
+                tracks = []
+                for i, track in enumerate(mid.tracks):
+                    tracks.append('{} (Track {})'.format(track.name, i))
+                if len(tracks) > 1:
+                    tracks.pop(0)
                     screen_manager.current = "Track"
                     screen_manager.transition.direction = "up"
                 else:
-                    backend.midi_management.MidiManagement().analyse_track(str(self.path), self.tracks.pop(0))
+                    lib.midi_management.MidiManagement().analyse_track(str(self.path), tracks.pop(0))
                     screen_manager.get_screen("Home").ids.infobox.text = "The command has been copied to the clipboard"
                     screen_manager.current = "Home"
                     screen_manager.transition.direction = "right"
-            except:
+            except Exception as e:
+                print(e)
                 self.popup_fe = Popup(title="FileError", content=Label(text="Please select a MIDI-File!"),
                             size_hint=(0.4, 0.4), auto_dismiss=True)
                 self.popup_fe.open()
@@ -49,16 +57,40 @@ class FileChooserScreen(MDScreen):
 
 
 class TrackChooseScreen(MDScreen):
-    def extract(self):
-        self.chosen_track = self.ids.track_spinner.text
-        if self.chosen_track == "Select a track":
-            self.popup_ns = Popup(title="NoSelectionError", content=Label(text="Please select a Track!"),
+    def show_dropdown(self, button):
+        global tracks
+        menu_items = []
+        for track in tracks:
+            menu_items.append(
+                {
+                    "viewclass": "OneLineListItem",
+                    "text": track,
+                    "on_release": lambda t=track, menu=None : self.extract(t, menu)
+                }
+            )
+
+        menu = MDDropdownMenu(
+            caller=button,
+            items=menu_items,
+            width_mult=8,
+        )
+
+        # Pass the menu to each item in the lambda callback to dismiss the menu
+        for item in menu_items:
+            item["on_release"] = lambda track=item["text"], menu=menu: self.extract(track, menu)
+
+        menu.open()
+
+    def extract(self, item: str, menu: Optional[MDDropdownMenu] = None):
+        global filepath
+        if menu != None:
+            menu.dismiss()
+        if item == "Select a track":
+            popup_ns = Popup(title="NoSelectionError", content=Label(text="Please select a Track!"),
                                   size_hint=(0.4, 0.4), auto_dismiss=True)
-            self.popup_ns.open()
+            popup_ns.open()
         else:
-            self.path = backend.csv_parsers.CsvRead().importing("./backend/temp.csv").pop(0)
-            self.path_transmit = self.path.pop(0)
-            backend.midi_management.MidiManagement().analyse_track(str(self.path_transmit), self.chosen_track)
+            lib.midi_management.MidiManagement().analyse_track(str(filepath), item)
             screen_manager.get_screen("Home").ids.infobox.text = "The command has been copied to the clipboard"
             screen_manager.current = "Home"
             screen_manager.transition.direction = "right"

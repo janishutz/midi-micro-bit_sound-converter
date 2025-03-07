@@ -1,34 +1,66 @@
-# midi-micro-bit_sound-converter
+<div id="title" align="center">
+    <h1>Midi to Micro:bit Sound converter</h1>
+</div>
+
+<div id="badges" align="center">
+    <img src="https://img.shields.io/github/license/janishutz/midi-micro-bit_sound-converter.svg">
+    <img src="https://img.shields.io/github/repo-size/janishutz/midi-micro-bit_sound-converter.svg">
+    <img src="https://img.shields.io/github/languages/top/janishutz/midi-micro-bit_sound-converter">
+    <img src="https://img.shields.io/github/directory-file-count/janishutz/midi-micro-bit_sound-converter.svg">
+    <br>
+    <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/janishutz/midi-micro-bit_sound-converter">
+    <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/janishutz/midi-micro-bit_sound-converter">
+    <img src="https://img.shields.io/github/issues-pr-raw/janishutz/midi-micro-bit_sound-converter">
+    <img alt="GitHub forks" src="https://img.shields.io/github/forks/janishutz/midi-micro-bit_sound-converter">
+    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/janishutz/midi-micro-bit_sound-converter">
+    <br>
+    <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/janishutz/midi-micro-bit_sound-converter/total?label=Downloads (total)">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/downloads/janishutz/midi-micro-bit_sound-converter/latest/total?label=Downloads (latest)">
+    <img src="https://img.shields.io/github/release/janishutz/midi-micro-bit_sound-converter.svg">
+    <img src="https://img.shields.io/github/package-json/v/janishutz/midi-micro-bit_sound-converter.svg?label=Development Version">
+</div>
+
 This app allows you to convert a midi file to the code needed for micro:bit programming
 
 Creating Music with the micro:bit is a hassle. This little app will allow you to take any midi-file and convert it into the list needed for micro:bit. 
 
-## INSTALLATION:
-Download the files by clicking on code, then on zip.
-You will need to install some dependencies, as well as python 3.8. If you haven't already go ahead and download python 3.8 and make sure to also include pip,
-as this will be used right after. Now, you will need to type the following commands in the terminal / command prompt: 
-pip install kivy[base]
-pip install kivymd
-pip install pyperclip
-pip install mido
+# Installation
+Download the files by clicking on code, then on zip or clone the repo locally using 
+```
+git clone https://github.com/janishutz/midi-micro-bit_sound-converter
+```
 
-You can run the app by heading into the folder you downloaded the zip file into, unzipping it and then by running the midi-converter.py file in the terminal / command prompt. (python3 midi-converter.py)
-You may do this as follows:
-### Linux and MacOS:
-Use cd./Path/To/File
+Then, run 
+```
+pip install -r requirements.txt
+```
+in the repo's folder (i.e. the folder you just cloned or downloaded and extracted)
 
-### Linux
-You may download the bash script that is located under releases. Give it execute permissions (e.g run chmod +x ./Path/To/File) and then run the file with ./Path/To/File
+Alternatively, create a venv using
+```
+python -m venv midi-converter
+```
 
-### Windows:
-Click on the navigation bar (the one where the path is displayed) and type: cmd
+and activate it using
+```
+source ./midi-converter/bin/active
+```
+
+The dependencies of this project are `mido`, `pyperclip`, `kivymd` and `kivy[base]`
 
 
-### SPECIAL notes for Linux users:
-You'll need to install some other dependencies first. Use your distro's package manager (apt-get for Debian based distros, dnf for Fedora based and pacman for arch-based distros). I'll show an example with debian based distros here: (you may also run the script under releases if you run a debian based distro.
-sudo apt-get install xclip
-sudo apt-get install xsel
-sudo apt-get install wl-clipboard
+# Running
+Open a terminal in the file location where you saved / cloned this repo to. Type 
+```
+python midi_converter.py
+```
 
-### OTHER OPTION:
-You may also run it in a venv (Virtual Environment), e.g. in Thonny. You still must install kivy[base], kivymd, pyperclip and mido in that venv (by using the manager of the IDE you are running)
+to run the app
+
+
+## Notes for Linux users:
+On some Linux distros, `xclip` and `xsel` don't come pre-installed. Install these dependencies.
+
+
+# Development
+Be warned, the code base is still very ugly. I only spent about two hours cleaning up the old code, so it still looks ugly. I will probably not clean up the code much more. Some variable names will simply stay weird
