@@ -26,18 +26,16 @@ class MidiManagement:
             tracknumber += 1
         output_list = []
 
-        tracked_notes = []
         bpm = 0
         timing = 20000
 
         # Track messages
         for msg in mid.tracks[tracknumber]:
             if msg.type == "note_on":
-                try:
-                    tracked_notes.append(self.get_note_as_micro_bit_string(msg))
-
-                except:
-                    pass
+                # We only need to handle pauses here
+                t = math.floor(msg.time / timing)
+                if t > 0:
+                    output_list.append('R:' + str(t))
             elif msg.type == "note_off":
                 # End tracked note at time offset for midi msg (that is relative to start)
                 note = ''
@@ -46,19 +44,8 @@ class MidiManagement:
                 except:
                     pass
 
-                # Find note in tracked notes, ignore if not in there
-                index = -1
-                for n in range(len(tracked_notes)):
-                    if tracked_notes[n] == note:
-                        index = n
-                        break;
-
-                # Get duration
-                if index >= 0:
-                    tracked_notes.remove(note)
-                    t = math.floor(msg.time / timing)
-
-                    output_list.append(note + ':' + str(t))
+                t = math.floor(msg.time / timing)
+                output_list.append(note + ':' + str(t))
             else:
                 try:
                     midi_msg = str(msg)
